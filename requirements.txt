@@ -1,6 +1,5 @@
 build==1.2.1
 # Editable Git install with no remote (icc==0.0.1)
--e /home/rfns/Documentos/Projetos/Qualix/iris-config-composer
 iniconfig==2.0.0
 packaging==24.1
 pluggy==1.5.0
