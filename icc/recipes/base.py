@@ -30,7 +30,11 @@ class Recipe(ABC):
         self._parameters: OrderedDict[str, str] = OrderedDict()
         self._stage: Stage = stage
 
+    @property
     def stage(self) -> Stage:
+        """
+        Indicates on which stage should this recipe run.
+        """
         return self._stage
 
     def serialize_parameters(self) -> str:
@@ -50,7 +54,7 @@ class Recipe(ABC):
         """
         instructions = [
             f"set errorLog = ##class(%Stream.FileCharacter).%New()",
-            f'do errorLog.LinkToFile("/tmp/icc/{get_stage_type_log_file(self._stage)}")',
+            f'do errorLog.LinkToFile("/tmp/icc/{get_stage_type_log_file(self.stage)}")',
             "",
             f"if {self.status_variable_name} '= 1",
             "{",
