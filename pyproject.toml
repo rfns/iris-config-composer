@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "icc"
+version = "0.0.1"
+description = "Compose IRIS instance configurations by using YAML or JSON."
+authors = [
+    { name = "Rubens F. N. da Silva", email = "felipensgm@gmail.com" }
+]
+
+[tool.pyright]
+include = ["icc", "tests"]
+exclude = ["**/__pycache__", "**/__init__.py"]
+venv = ["venv"]
+executionEnvironments = [
+    { root = "icc" }
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+
+[tool.isort]
+profile = "black"
+

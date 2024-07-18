@@ -1,0 +1,63 @@
+icc-version: 1
+
+stages:
+  pre:
+    configurations:
+      databases:
+        create:
+          - name: "RCONNECT_SRC"
+            storage_path: "/app/src"
+            resource: "%DB_SRC"
+            parameters:
+              A: 1
+          - name: "RCONNECT_DB"
+            storage_path: "/dummy"
+            resource: "%DB_DATA"
+            parameters:
+              A: 2
+
+      resources:
+        create:
+          - name: "%DB_SRC"
+            permissions: "RU"
+          - name: "%DB_DATA"
+            permissions: "RWU"
+
+      namespaces:
+        create:
+          - name: "RCONNECT"
+            source_database: "RCONNECT_SRC"
+            data_database: "RCONNECT_DATA"
+            mappings:
+              globals:
+                - expression: "CC*"
+                  origin_namespace: "CONSISTEM"
+              routines:
+                - expression: "WP*"
+                  origin_namespace: "RCONNECT"
+              packages:
+                - expression: "Qualix*"
+                  origin_namespace: "RCONNECT"
+
+      csp_applications:
+        create:
+          - name: "/qualix/rconnect"
+            namespace: "USER"
+            cookies_path: "/qualix/rconnect"
+            authentication_strategies:
+              - no_auth
+              - delegate
+
+  post:
+    databases:
+      create:
+        - name: "DB_SRC"
+
+    namespaces:
+      modify:
+        - name: "RCONNECT"
+          data_database: "DB_SRC"
+
+
+
+
